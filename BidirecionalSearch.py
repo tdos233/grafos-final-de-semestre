@@ -120,6 +120,7 @@ class BidirectionalSearch:
         path = list(map(str, path))
          
         print(' '.join(path))
+        return (' '.join(path))
      
     # Function for bidirectional searching
     def bidirectional_search(self, src, dest):
@@ -157,10 +158,11 @@ class BidirectionalSearch:
             if intersecting_node != -1:
                 print(f"Path exists between {src} and {dest}")
                 print(f"Intersection at : {intersecting_node}")
-                self.print_path(intersecting_node,
+                path=self.print_path(intersecting_node,
                                 src, dest)
+                return (path,intersecting_node)
                 exit(0)
-        return -1
+        return (-1,-1)
  
 # Driver code
 if __name__ == '__main__':
@@ -191,8 +193,9 @@ if __name__ == '__main__':
     graph.add_edge(10, 13)
     graph.add_edge(10, 14)
      
-    out = graph.bidirectional_search(src, dest)
+    path,intersecting_node = graph.bidirectional_search(src, dest)
      
-    if out == -1:
+    if path == -1:
         print(f"Path does not exist between {src} and {dest}")
- 
+    else :
+        print(path,intersecting_node)
