@@ -45,7 +45,8 @@ class Application:
         self.titulo["font"] = ("Arial", "10", "bold")
         self.titulo.pack()
 
-        self.instrucoes = Label(self.InstrucoesContainer, text="""1º-preencha o numero de vertices desejado. Os vertices são representado pelos numeros do intervalo 0 a o numero de vertices -1.
+        self.instrucoes = Label(self.InstrucoesContainer, text="""Instruções
+        1º-preencha o numero de vertices desejado. Os vertices são representado pelos numeros do intervalo 0 a o numero de vertices -1.
         2º-No campo arestas preencha com os vertices de cada aresta da seguinte forma numero do vertice,numero do vertice.Cada linha representa uma aresta, entao ao terminar uma aresta precione enter.
         3º-Preencha o vertice de inicio e destino, lembrando que os vertices tem que estar detro do intervalo de 0 a numero de vertice -1
         4º-Para inserir as entradas dos exemplo é só clicar no botão referente ao exemplo.
@@ -71,7 +72,7 @@ class Application:
         self.arestasLabel.pack(side=LEFT)
         self.aresta=scrolledtext.ScrolledText(self.segundoContainer,height=3,width=7,wrap=WORD,)
         self.aresta.pack(side=LEFT)
-        self.aresta.insert('1.0',"0,4\n1,4\n2,5\n3,5\n4,6\n5,6\n6,7\n7,8\n8,9\n8,10\n9,11\n9,12\n10,13\n10,14")
+        self.aresta.insert('1.0',"0,4\n1,4\n2,5\n3,5\n4,6\n5,6\n6,7\n7,8\n8,9\n8,10\n9,11\n9,12\n10,13\n10,14\n")
 
         self.scrLabel=Label(self.terceiroContainer,text="vertice de inicio")
         self.scrLabel.pack(side=LEFT)
@@ -115,11 +116,51 @@ class Application:
 
         self.mensagem = Label(self.quartoContainer, text="", font=self.fontePadrao)
         self.mensagem.pack()
+    def verificar_entrada(self,vertices,arestas,inicio,destino):
+        if not(vertices.isdigit()):
+            self.mensagem.configure(image='')
+            self.mensagem["text"]="O numero de vértices deve ser um número"
+            return False
+        elif not inicio.isdigit():
+            self.mensagem.configure(image='')
+            self.mensagem["text"]="O vertice de inicio não é um número"
+            return False
+        elif not destino.isdigit():
+            self.mensagem.configure(image='')
+            self.mensagem["text"]="O vertice de destino não é um número"
+            return False
+        elif int(inicio) > int(vertices)-1:
+            self.mensagem.configure(image='')
+            self.mensagem["text"]="O vertice de inicio esta fora do intervalo de 0 a {} ".format(int(vertices)-1)
+            return False
+        elif int(destino)> int(vertices)-1:
+            self.mensagem.configure(image='')
+            self.mensagem["text"]="O vertice de destino esta fora do intervalo de 0 a {} ".format(int(vertices)-1)
+            return False
+        elif arestas.split("\n")[-1] !='':
+            self.mensagem.configure(image='')
+            self.mensagem["text"]="falta apertar enter na ultima linha do campo das arestas"
+            print(arestas.split("\n"))
+            return False
+        
+        for i,arest in enumerate(arestas.split("\n")[:-1]):
+            if not(arest.split(",")[0].isdigit() and arest.split(",")[1].isdigit()):
+                self.mensagem.configure(image='')
+                self.mensagem["text"]="Existe um vertice que não é número no par de vertices na linha {}".format(i+1)
+                return False
+            elif (int(arest.split(",")[0]) > int(vertices)-1) or (int(arest.split(",")[1]) > int(vertices)-1):
+                print((int(arest.split(",")[0]) > int(vertices)-1 and int(arest.split(",")[1]) > int(vertices)-1),int(arest.split(",")[0]),int(arest.split(",")[1]),int(vertices)-1)
+                self.mensagem.configure(image='')
+                self.mensagem["text"]="Existe um vertice que esta fora do intervalo de 0 a {} na linha {}".format(int(vertices)-1,i+1)
+                return False    
+        
+        return True
+
     def exemplo_1(self):
         self.nvertice.delete(0,END)
         self.nvertice.insert(0,15)
         self.aresta.delete('1.0',END)
-        self.aresta.insert('1.0',"0,4\n1,4\n2,5\n3,5\n4,6\n5,6\n6,7\n7,8\n8,9\n8,10\n9,11\n9,12\n10,13\n10,14")
+        self.aresta.insert('1.0',"0,4\n1,4\n2,5\n3,5\n4,6\n5,6\n6,7\n7,8\n8,9\n8,10\n9,11\n9,12\n10,13\n10,14\n")
         self.scr.delete(0,END)
         self.scr.insert(0,0)
         self.dest.delete(0,END)
@@ -129,7 +170,7 @@ class Application:
         self.nvertice.delete(0,END)
         self.nvertice.insert(0,2)
         self.aresta.delete('1.0',END)
-        self.aresta.insert('1.0',"0,1")
+        self.aresta.insert('1.0',"0,1\n")
         self.scr.delete(0,END)
         self.scr.insert(0,0)
         self.dest.delete(0,END)
@@ -139,54 +180,56 @@ class Application:
         self.nvertice.delete(0,END)
         self.nvertice.insert(0,15)
         self.aresta.delete('1.0',END)
-        self.aresta.insert('1.0',"0,4\n1,4\n2,5\n3,5\n4,6\n5,6\n6,7\n7,8\n8,9\n8,10\n9,11\n9,12\n10,13\n10,14")
+        self.aresta.insert('1.0',"0,4\n1,4\n2,5\n3,5\n4,6\n5,6\n6,7\n7,8\n8,9\n8,10\n")
         self.scr.delete(0,END)
         self.scr.insert(0,0)
         self.dest.delete(0,END)
-        self.dest.insert(0,14)
+        self.dest.insert(0,10)
         print('ex3')
     
 
     def Buscar(self):
-        print("busca")
-        n=int(self.nvertice.get())
-        grafo_busca=BidirectionalSearch(n)
-        arestas=self.aresta.get("1.0",END)[:-1]
-        scr=int(self.scr.get())
-        dest=int(self.dest.get())
-        G = nx.Graph()
-        for i in range(n):
-            G.add_node(i)
-        for arest in arestas.split('\n'):
-            a=int(arest.split(',')[0])
-            b=int(arest.split(',')[1])
-            G.add_edge(a, b)
-            grafo_busca.add_edge(a, b)
-        path,intersecting_node =grafo_busca.bidirectional_search(scr, dest)
-        if(path==-1):
-            path="não existe caminho entre os vertices {} e {}".format(str(scr),str(dest))
-            self.mensagem.configure(image='')
-            self.mensagem["text"]=str(path)
-        else:
-            val_map ={}
-            values = []
+        print("busca",self.verificar_entrada(self.nvertice.get(),self.aresta.get("1.0",END)[:-1],self.scr.get(),self.dest.get()))
+        if self.verificar_entrada(self.nvertice.get(),self.aresta.get("1.0",END)[:-1],self.scr.get(),self.dest.get()):
+            n=int(self.nvertice.get())
+            grafo_busca=BidirectionalSearch(n)
+            arestas=self.aresta.get("1.0",END)[:-1]
+            scr=int(self.scr.get())
+            dest=int(self.dest.get())
+            G = nx.Graph()
+            for i in range(n):
+                G.add_node(i)
+            for arest in arestas.split('\n')[:-1]:
+                a=int(arest.split(',')[0])
+                b=int(arest.split(',')[1])
+                G.add_edge(a, b)
+                grafo_busca.add_edge(a, b)
+            path,intersecting_node =grafo_busca.bidirectional_search(scr, dest)
+            if(path==-1):
+                path="não existe caminho entre os vertices {} e {}".format(str(scr),str(dest))
+                self.mensagem.configure(image='')
+                self.mensagem["text"]=str(path)
+            else:
+                val_map ={}
+                values = []
 
-            colorirvermelho=path[:path.index(str(intersecting_node))].split(' ')
-            colorirvermelho.pop(colorirvermelho.index(''))
-            colorirVerde=path[path.index(str(intersecting_node))+1:].split(' ')
-            colorirVerde.pop(colorirVerde.index(''))
-            for i in range(len(colorirvermelho)):
-                val_map[int(colorirvermelho[i])]=0.5714285714285714
-            for i in range(len(colorirVerde)):
-                val_map[int(colorirVerde[i])]=0.5714285714285714
-            val_map[int(intersecting_node)]=0.5714285714285714
-            values = [val_map.get(node,0.5) for node in G.nodes()]
-            nx.draw(G, with_labels=True, cmap=plt.get_cmap('jet'), node_color=values,edge_color="skyblue", style="solid")
-            plt.savefig('imd.png')
-            plt.close()
-            ima=PhotoImage(file='imd.png')
-            self.mensagem.configure(image=ima)
-            self.mensagem.imagem=ima
+                colorirvermelho=path[:path.index(str(intersecting_node))].split(' ')
+                colorirvermelho.pop(colorirvermelho.index(''))
+                colorirVerde=path[path.index(str(intersecting_node))+1:].split(' ')
+                colorirVerde.pop(colorirVerde.index(''))
+                for i in range(len(colorirvermelho)):
+                    val_map[int(colorirvermelho[i])]=0.5714285714285714
+                for i in range(len(colorirVerde)):
+                    val_map[int(colorirVerde[i])]=0.5714285714285714
+                val_map[int(intersecting_node)]=0.5714285714285714
+                values = [val_map.get(node,0.5) for node in G.nodes()]
+                nx.draw(G, with_labels=True, cmap=plt.get_cmap('jet'), node_color=values,edge_color="skyblue", style="solid")
+                plt.savefig('imd.png')
+                plt.close()
+                ima=PhotoImage(file='imd.png')
+                self.mensagem.configure(image=ima)
+                self.mensagem.imagem=ima
+        
             
             
             
