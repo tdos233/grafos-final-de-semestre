@@ -64,7 +64,7 @@ class Application:
         self.nvertice.pack(side=LEFT)
         self.nvertice.insert(0,15)
 
-        self.arestasLabel=Label(self.segundoContainer,text="arestas")
+        self.arestasLabel=Label(self.segundoContainer,text="Arestas")
         self.arestasLabel.pack(side=LEFT)
         self.aresta=scrolledtext.ScrolledText(self.segundoContainer,height=3,width=7,wrap=WORD,)
         self.aresta.pack(side=LEFT)
@@ -136,7 +136,6 @@ class Application:
         elif arestas.split("\n")[-1] !='':
             self.mensagem.configure(image='')
             self.mensagem["text"]="falta apertar enter na ultima linha do campo das arestas"
-            print(arestas.split("\n"))
             return False
         
         for i,arest in enumerate(arestas.split("\n")[:-1]):
@@ -145,7 +144,6 @@ class Application:
                 self.mensagem["text"]="Existe um vertice que não é número no par de vertices na linha {}".format(i+1)
                 return False
             elif (int(arest.split(",")[0]) > int(vertices)-1) or (int(arest.split(",")[1]) > int(vertices)-1):
-                print((int(arest.split(",")[0]) > int(vertices)-1 and int(arest.split(",")[1]) > int(vertices)-1),int(arest.split(",")[0]),int(arest.split(",")[1]),int(vertices)-1)
                 self.mensagem.configure(image='')
                 self.mensagem["text"]="Existe um vertice que esta fora do intervalo de 0 a {} na linha {}".format(int(vertices)-1,i+1)
                 return False    
@@ -161,7 +159,6 @@ class Application:
         self.scr.insert(0,0)
         self.dest.delete(0,END)
         self.dest.insert(0,14)
-        print('ex1')
     def exemplo_2(self):
         self.nvertice.delete(0,END)
         self.nvertice.insert(0,2)
@@ -171,7 +168,6 @@ class Application:
         self.scr.insert(0,0)
         self.dest.delete(0,END)
         self.dest.insert(0,1)
-        print('ex2')
     def exemplo_3(self):
         self.nvertice.delete(0,END)
         self.nvertice.insert(0,15)
@@ -181,7 +177,6 @@ class Application:
         self.scr.insert(0,0)
         self.dest.delete(0,END)
         self.dest.insert(0,10)
-        print('ex3')
     
 
     def Buscar(self):
