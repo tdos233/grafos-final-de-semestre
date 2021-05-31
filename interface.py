@@ -144,7 +144,7 @@ class Application:
             return False
         
         for i,arest in enumerate(arestas.split("\n")[:-1]):
-            if not(arest.split(",")[0].isdigit() and arest.split(",")[1].isdigit()):
+            if not(arest.split(",")[0].isdigit() and arest.split(",")[1].isdigit()) and len(arestas)>=1:
                 self.mensagem.configure(image='')
                 self.mensagem["text"]="Existe um vertice que não é número no par de vertices na linha {}".format(i+1)
                 return False
