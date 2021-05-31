@@ -52,7 +52,7 @@ class Application:
         4º-Para inserir as entradas dos exemplo é só clicar no botão referente ao exemplo.
         5º- para fazer a busca click no botão Buscar e uma imagem do grafo será exibida abaixo do botão.
         
-        Os vertices em vermelho representam o passeio/percuso pecorrido pela busca.
+        Os vertices em vermelho representam o passeio/percuso pecorrido pelas buscas e a interseção entre as buscas esta representado pela cor azul.
         Caso não apareça em vermelho é por que o caminho é o proprio grafo.
         Caso a imagem dé a impressão de estar errada ou não esteja dando para ver direito click em Buscar novamente.""")
         self.instrucoes["font"] = ("Arial", "10", "bold")
@@ -221,7 +221,7 @@ class Application:
                     val_map[int(colorirvermelho[i])]=0.5714285714285714
                 for i in range(len(colorirVerde)):
                     val_map[int(colorirVerde[i])]=0.5714285714285714
-                val_map[int(intersecting_node)]=0.5714285714285714
+                val_map[int(intersecting_node)]=0.25
                 values = [val_map.get(node,0.5) for node in G.nodes()]
                 nx.draw(G, with_labels=True, cmap=plt.get_cmap('jet'), node_color=values,edge_color="skyblue", style="solid")
                 plt.savefig('imd.png')
