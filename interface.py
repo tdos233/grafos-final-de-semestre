@@ -50,7 +50,6 @@ class Application:
         5º- para fazer a busca click no botão Buscar e uma imagem do grafo será exibida abaixo do botão.
         
         Os vertices em vermelho representam o passeio/percuso pecorrido pelas buscas e a interseção entre as buscas esta representado pela cor azul.
-        Caso não apareça em vermelho é por que o caminho é o proprio grafo.
         Caso a imagem dé a impressão de estar errada ou não esteja dando para ver direito click em Buscar novamente.""")
         self.instrucoes["font"] = ("Arial", "10", "bold")
         self.instrucoes.pack()
