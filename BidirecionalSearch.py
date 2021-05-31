@@ -116,10 +116,10 @@ class BidirectionalSearch:
             path.append(self.dest_parent[i])
             i = self.dest_parent[i]
              
-        print("*****Path*****")
+       
         path = list(map(str, path))
          
-        print(' '.join(path))
+       
         return (' '.join(path))
      
     # Function for bidirectional searching
@@ -156,8 +156,6 @@ class BidirectionalSearch:
             # then path from source to
             # destination exists
             if intersecting_node != -1:
-                print(f"Path exists between {src} and {dest}")
-                print(f"Intersection at : {intersecting_node}")
                 path=self.print_path(intersecting_node,
                                 src, dest)
                 return (path,intersecting_node)

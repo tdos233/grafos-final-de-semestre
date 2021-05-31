@@ -5,10 +5,7 @@ import networkx as nx
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
-import time
-matplotlib.use("TkAgg")
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.figure import Figure
+
 class Application:
     def __init__(self, master=None):
         self.fontePadrao = ("Arial", "10")
@@ -189,7 +186,6 @@ class Application:
     
 
     def Buscar(self):
-        print("busca",self.verificar_entrada(self.nvertice.get(),self.aresta.get("1.0",END)[:-1],self.scr.get(),self.dest.get()))
         if self.verificar_entrada(self.nvertice.get(),self.aresta.get("1.0",END)[:-1],self.scr.get(),self.dest.get()):
             n=int(self.nvertice.get())
             grafo_busca=BidirectionalSearch(n)
